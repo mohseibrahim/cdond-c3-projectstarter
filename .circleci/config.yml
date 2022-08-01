@@ -69,7 +69,8 @@ jobs:
            cd frontend
            npm i
            npm audit fix --force
-
+           npm audit fix --force
+           npm audit --audit-level=cirtical
 
 
 
@@ -83,6 +84,8 @@ jobs:
            cd backend
            npm i
            npm audit fix --force
+           npm audit fix --force
+           npm audit --audit-level=cirtical
 
 
             
