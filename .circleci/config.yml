@@ -43,10 +43,10 @@ jobs:
     steps:
      - run:
         command : |
-          - checkout
-          - cd frontend
-          - npm i
-          - npm run test
+          checkout
+          cd frontend
+          npm i
+          npm run test
                 
   test-backend:
     docker:
@@ -54,10 +54,10 @@ jobs:
     steps:
       - run:
          command : |
-           - checkout
-           - cd backend
-           - npm i
-           - npm run test
+           checkout
+           cd backend
+           npm i
+           npm run test
 
             
 
