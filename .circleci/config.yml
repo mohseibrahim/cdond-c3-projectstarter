@@ -55,7 +55,6 @@ jobs:
       - checkout
       - run:
          command : |
-           checkout
            cd backend
            npm i
            npm run test
