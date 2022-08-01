@@ -67,7 +67,9 @@ jobs:
       - run:
          command : |
            cd frontend
-           npm audit fix --force
+           npm i
+           npm audit fix --audit-level=cirtical --force
+           npm audit --audit-level=cirtical
 
 
 
@@ -79,7 +81,9 @@ jobs:
       - run:
          command : |
            cd backend
-           npm audit fix --force
+           npm i
+           npm audit fix --audit-level=cirtical --force
+           npm audit --audit-level=cirtical
 
 
             
