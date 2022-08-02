@@ -133,7 +133,14 @@ jobs:
           event: fail
           template: basic_fail_1
 
-            
+## failure_job
+  failure_job:
+    docker:
+      - image : circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: exit 1 
+
 
 workflows:
   default:
@@ -148,6 +155,9 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
+      - failure_job
       - deploy:
           context: cdond-c3-projectstarter  
+          requires: [failure_job]
+      
 
