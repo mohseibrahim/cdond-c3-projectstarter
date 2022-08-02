@@ -125,14 +125,14 @@ jobs:
       - image: circleci/node:12.18.0
     steps:
       - checkout
+      - run : npm i
       - run:
-          command: |
-           npm i
-           npm run deploy
+          command:
+            npm run deploy
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL
           event: fail
-
+          template: basic_fail_1
 
             
 
