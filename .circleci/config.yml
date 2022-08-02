@@ -21,6 +21,10 @@ jobs:
             cd frontend
             npm i
             npm run build
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
       - save_cache:
           paths: [frontend/node_modules]
@@ -39,6 +43,10 @@ jobs:
              cd backend
              npm i
              npm run build
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
       - save_cache:
           paths: [backend/node_modules]
@@ -56,6 +64,10 @@ jobs:
           cd frontend
           npm i
           npm run test
+     - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
      - save_cache:
           paths: [test-frontend]
@@ -73,6 +85,10 @@ jobs:
            cd backend
            npm i
            npm run test
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
       - save_cache:
           paths: [test-backend]
@@ -90,6 +106,10 @@ jobs:
            cd frontend
            npm i
            npm audit 
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
       - save_cache:
           paths: [scan-frontend]
@@ -110,6 +130,10 @@ jobs:
            npm i
            npm audit fix --force
            npm audit fix --force
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
 
       - save_cache:
@@ -136,19 +160,24 @@ jobs:
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
+      - build-frontend :
+         context: cdond-c3-projectstarter
+      - build-backend :
+         context: cdond-c3-projectstarter
       - test-frontend:
          requires: [build-frontend]
+         context: cdond-c3-projectstarter
       - test-backend:
          requires: [build-backend]
+         context: cdond-c3-projectstarter
       - scan-backend:
           requires: [build-backend]
+          context: cdond-c3-projectstarter
       - scan-frontend:
           requires: [build-frontend]
-      - notify :
           context: cdond-c3-projectstarter
-          requires: [build-frontend,build-backend,test-frontend,test-backend,scan-frontend,scan-backend]
+
+
 
       
 
