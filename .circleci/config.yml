@@ -147,8 +147,8 @@ workflows:
       - scan-frontend:
           requires: [build-frontend]
           post-steps :
-              notify :
-                context: cdond-c3-projectstarter
+              - notify :
+                 context: cdond-c3-projectstarter
 
       
 
