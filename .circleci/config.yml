@@ -1,7 +1,8 @@
 version: 2.1
 ##Add the orbs stanza below your version, invoking the orb:
 orbs:
-  slack: circleci/slack@13.8.0
+
+  slack: circleci/slack@4.1
 
 jobs:
 
