@@ -122,24 +122,17 @@ jobs:
 ## slack notification job
   deploy:
     docker:
-      - image: circleci/node:12.18.0
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
           command:
            npm i
+           npm run deploy
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL
           event: fail
           template: basic_fail_1
-
-## failure_job
-  failure_job:
-    docker:
-      - image : circleci/node:13.8.0
-    steps:
-      - checkout
-      - run: exit 1 
 
 
 workflows:
@@ -155,7 +148,6 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - failure_job
       - deploy:
           context: cdond-c3-projectstarter  
 
