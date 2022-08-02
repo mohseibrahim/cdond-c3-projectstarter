@@ -17,6 +17,26 @@ commands:
           event: pass
           template: basic_success_1
 
+  trigger_slack_notification:
+   steps:
+      - slack/notify:
+          custom: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "plain_text",
+                      "text": "*This is a text notification*",
+                      "emoji": true
+                    }
+                  ]
+                }
+              ]
+            }
+          event: always
+
 jobs:
 ## slack notification job
   deploy:
