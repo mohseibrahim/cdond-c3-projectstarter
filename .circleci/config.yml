@@ -6,20 +6,7 @@ orbs:
 
 jobs:
 
-## slack notification job
-  deploy:
-    docker:
-      - image: circleci/node:12.18.0
-    steps:
-      - checkout
-      - run:
-          command: |
-           npm i
-           npm run deploy
-      - slack/notify:
-          channel: $SLACK_DEFAULT_CHANNEL
-          event: fail
-          template: basic_fail_1
+
 
   build-frontend:
     docker:
@@ -132,7 +119,20 @@ jobs:
           key: backend-build
 
 
-
+## slack notification job
+  deploy:
+    docker:
+      - image: circleci/node:12.18.0
+    steps:
+      - checkout
+      - run:
+          command: |
+           npm i
+           npm run deploy
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
             
 
