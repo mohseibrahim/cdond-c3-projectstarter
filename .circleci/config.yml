@@ -2,67 +2,23 @@ version: 2.1
 ##Add the orbs stanza below your version, invoking the orb:
 orbs:
 
-  slack: circleci/slack@4.3.0
-
-commands:
-  notify_slack_error:
-    steps:
-      - slack/notify:
-          event: fail
-          template: basic_fail_1
-
-  notify_slack_pass:
-    steps:
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-
-  trigger_slack_notification:
-   steps:
-      - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
+  slack: circleci/slack@4.1
 
 jobs:
+
 ## slack notification job
   deploy:
     docker:
       - image: circleci/node:12.18.0
-    resource_class: medium
     steps:
-      - trigger_slack_notification
       - checkout
+      - node/install-packages
       - run:
-          name: Install packages
-          command: npm install
-      - run:
-          name: Installing Firebase-Tools
-          command: npm install firebase-tools
-      - run:
-          name: Firebase Set Project Id
-          command: ./node_modules/.bin/firebase use default --token $SLACK_ACCESS_TOKEN
-      - run:
-          name: Build App
-          command: npm run build:app
-      - run:
-          name: Deploy All
-          command: ./node_modules/.bin/firebase deploy --token $SLACK_ACCESS_TOKEN --only functions,hosting,storage --force
-      - notify_slack_error
-      - notify_slack_pass
+          command: npm run deploy
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
 
   build-frontend:
     docker:
@@ -192,5 +148,6 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - deploy
+      - deploy:
+          context: cdond-c3-projectstarter  
 
