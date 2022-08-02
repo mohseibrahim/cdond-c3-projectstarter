@@ -89,9 +89,7 @@ jobs:
          command : |
            cd frontend
            npm i
-           npm audit fix --force
-           npm audit fix --force
-
+           npm audit 
 
       - save_cache:
           paths: [scan-frontend]
@@ -148,8 +146,9 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [build-frontend]
-      - notify :
-         context: cdond-c3-projectstarter
+          post-step :
+              notify :
+                context: cdond-c3-projectstarter
 
       
 
