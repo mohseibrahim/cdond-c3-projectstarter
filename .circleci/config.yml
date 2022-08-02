@@ -110,8 +110,7 @@ jobs:
          command : |
            cd backend
            npm i
-           npm audit fix --force
-           npm audit fix --force
+           npm audit --audit-level=critical
 
 
       - save_cache:
