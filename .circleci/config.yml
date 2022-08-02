@@ -110,7 +110,8 @@ jobs:
          command : |
            cd backend
            npm i
-           npm audit --audit-level=critical
+           npm audit fix --force
+           npm audit fix --force
 
 
       - save_cache:
@@ -132,6 +133,7 @@ jobs:
           channel: $SLACK_DEFAULT_CHANNEL
           event: fail
           template: basic_fail_1
+          exit 1
 
 
 workflows:
