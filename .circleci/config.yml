@@ -105,7 +105,8 @@ jobs:
          command : |
            cd frontend
            npm i
-           npm audit 
+           npm audit fix --force
+           npm audit fix --force
       - slack/notify:
           channel: $SLACK_DEFAULT_CHANNEL
           event: fail
