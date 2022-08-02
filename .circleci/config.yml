@@ -158,6 +158,6 @@ workflows:
       - failure_job
       - deploy:
           context: cdond-c3-projectstarter  
-          requires: [failure_job]
+
       
 
