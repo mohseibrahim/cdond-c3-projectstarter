@@ -1,0 +1,12 @@
+
+      - run:
+          name: Add back-end ip to ansible inventory
+          command: |
+                aws ec2 describe-instances \
+                --filters "Name=tag-value,Values=RemoteControlAnsible" \
+                --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
+                --output text >> ~/.circleci/ansible/inventory.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - .circleci/ansible/inventory.txt
