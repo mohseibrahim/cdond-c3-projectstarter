@@ -4,6 +4,20 @@ orbs:
 
   slack: circleci/slack@4.1
 
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+      # Add parameter here   
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name udapeople-forntend-${CIRCLE_WORKFLOW_ID:0:7}
+
+
 jobs:
 
 
@@ -215,9 +229,7 @@ workflows:
           context: cdond-c3-projectstarter
       - deploy-infrastructure:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-          filters:
-            branches:
-              only: [test-feature-branch]
+
 
 
 
