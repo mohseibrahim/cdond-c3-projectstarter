@@ -194,9 +194,9 @@ jobs:
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
-         name: "wait 300 seconds for target connection to become reachable/usable."
+         name: "wait 120 seconds for target connection to become reachable/usable."
          command: |        
-           sleep 300
+           sleep 120
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -231,6 +231,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
+            sed '2d' ~/inventory.txt
             sed '2d' ~/inventory.txt
             ansible-playbook -i ~/inventory.txt .circleci/ansible/configure-server.yml      
 
