@@ -200,16 +200,17 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            touch ~/inventory4.txt
-            echo "[web]" > ~/inventory4.txt
-            cat ~/inventory4.txt
+            touch ~/inventory5.txt
+            echo "[web]" > ~/inventory5.txt
+            cat ~/inventory5.txt
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
-               --output text >> ~/inventory4.txt 
-            cat ~/inventory4.txt
+               --filters "Name=tag-value,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+               --output text >> ~/inventory5.txt 
+            cat ~/inventory5.txt
       - persist_to_workspace:
           root: ~/
           paths:
-            - inventory4.txt
+            - inventory5.txt
       # Here's where you will add some code to rollback on failure      
 
 
@@ -231,7 +232,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-            ansible-playbook -i ~/inventory4.txt .circleci/ansible/configure-server.yml      
+            ansible-playbook -i ~/inventory5.txt .circleci/ansible/configure-server.yml      
 
 workflows:
   default:
