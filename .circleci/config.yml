@@ -201,12 +201,12 @@ jobs:
           name: Add back-end ip to ansible inventory
           command: |
             yum install -y tar gzip
-            touch ~/inventory2.txt
+            touch ~/inventory3.txt
             echo "[web]" > ~/inventory2.txt
-            cat ~/inventory2.txt
+            cat ~/inventory3.txt
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
-               --output text >> ~/inventory2.txt 
-            cat ~/inventory2.txt
+               --output text >> ~/inventory3.txt 
+            cat ~/inventory3.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -255,9 +255,9 @@ workflows:
       #     context: cdond-c3-projectstarter
       - deploy-infrastructure
           # requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-      - configure_infrastructure:
-          requires:
-           - deploy-infrastructure
+      # - configure_infrastructure:
+      #     requires:
+      #      - deploy-infrastructure
 
 
 
