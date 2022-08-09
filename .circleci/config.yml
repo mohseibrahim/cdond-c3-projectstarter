@@ -228,7 +228,7 @@ jobs:
           name: Run Playbook and Configure server
           command: |
             sed '2d' ~/inventory.txt
-            ansible-playbook -i ~/inventory.txt configure-server.yml      
+            ansible-playbook -i ~/inventory.txt .circleci/ansible/configure-server.yml      
 
 workflows:
   default:
