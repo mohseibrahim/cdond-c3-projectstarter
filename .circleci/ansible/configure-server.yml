@@ -63,5 +63,3 @@
     - TYPEORM_MIGRATIONS_DIR: "{{ lookup('env', 'TYPEORM_MIGRATIONS_DIR')}}" 
     # Add more env vars here
 
-  roles:
-    # Your code here
