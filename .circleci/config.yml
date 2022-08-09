@@ -206,6 +206,7 @@ jobs:
             cat ~/inventory.txt
             aws ec2 describe-instances --query 'Reservations[*].Instances[*].[PublicIpAddress]' \
                --output text >> ~/inventory.txt 
+            cat ~/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -231,6 +232,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
+            sed '2d' ~/inventory.txt
             ansible-playbook -i ~/inventory.txt .circleci/ansible/configure-server.yml      
 
 workflows:
